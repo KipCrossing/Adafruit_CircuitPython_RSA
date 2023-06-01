@@ -1,0 +1,17 @@
+{
+  "urls": [
+    [
+      "rsa/__init__.py",
+      "github:KipCrossing/micropython_rsa/rsa/__init__.py"
+    ],
+    [
+      "rsa/utils.py",
+      "github:KipCrossing/micropython_rsa/util/decode_priv_key.py"
+    ]
+  ],
+  "deps": [
+    "hashlib",
+    "binascii"
+  ],
+  "version": "0.0.1"
+}
