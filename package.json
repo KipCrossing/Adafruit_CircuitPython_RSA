@@ -3,6 +3,50 @@
     [
       "rsa/__init__.py",
       "github:KipCrossing/micropython_rsa/rsa/__init__.py"
+    ],
+    [
+      "rsa/_compat.py",
+      "github:KipCrossing/micropython_rsa/rsa/_compat.py"
+    ],
+    [
+      "rsa/asn1.py",
+      "github:KipCrossing/micropython_rsa/rsa/asn1.py"
+    ],
+    [
+      "rsa/common.py",
+      "github:KipCrossing/micropython_rsa/rsa/common.py"
+    ],
+    [
+      "rsa/core.py",
+      "github:KipCrossing/micropython_rsa/rsa/core.py"
+    ],
+    [
+      "rsa/key.py",
+      "github:KipCrossing/micropython_rsa/rsa/key.py"
+    ],
+    [
+      "rsa/machine_size.py",
+      "github:KipCrossing/micropython_rsa/rsa/machine_size.py"
+    ],
+    [
+      "rsa/pem.py",
+      "github:KipCrossing/micropython_rsa/rsa/pem.py"
+    ],
+    [
+      "rsa/pkcs1.py",
+      "github:KipCrossing/micropython_rsa/rsa/pkcs1.py"
+    ],
+    [
+      "rsa/prime.py",
+      "github:KipCrossing/micropython_rsa/rsa/prime.py"
+    ],
+    [
+      "rsa/randnum.py",
+      "github:KipCrossing/micropython_rsa/rsa/randnum.py"
+    ],
+    [
+      "rsa/transform.py",
+      "github:KipCrossing/micropython_rsa/rsa/transform.py"
     ]
   ],
   "deps": [],
