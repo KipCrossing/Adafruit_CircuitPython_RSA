@@ -60,13 +60,19 @@ HASH_ASN1 = {
     "SHA-512": b"\x30\x51\x30\x0d\x06\x09\x60\x86\x48\x01\x65\x03\x04\x02\x03\x05\x00\x04\x40",
 }
 
+hash_methods_to_check = {
+    "MD5": "md5",
+    "SHA-1": "sha1",
+    "SHA-224": "sha224",
+    "SHA-256": "sha256",
+    "SHA-384": "sha384",
+    "SHA-512": "sha512",
+}
+
 HASH_METHODS = {
-    "MD5": hashlib.md5,
-    "SHA-1": hashlib.sha1,
-    "SHA-224": hashlib.sha224,
-    "SHA-256": hashlib.sha256,
-    "SHA-384": hashlib.sha384,
-    "SHA-512": hashlib.sha512,
+    method: getattr(hashlib, attr)
+    for method, attr in hash_methods_to_check.items()
+    if hasattr(hashlib, attr)
 }
 
 
