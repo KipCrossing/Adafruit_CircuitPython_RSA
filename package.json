@@ -49,6 +49,15 @@
       "github:KipCrossing/micropython_rsa/rsa/transform.py"
     ]
   ],
-  "deps": [],
+  "deps": [
+    [
+      "logging",
+      "latest"
+    ],
+    [
+      "hashlib",
+      "latest"
+    ]
+  ],
   "version": "0.0.1"
 }
