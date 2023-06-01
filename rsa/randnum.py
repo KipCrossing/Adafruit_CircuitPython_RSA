@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-`adafruit_rsa.randnum`
+`rsa.randnum`
 ====================================================
 
 Functions for generating random numbers.
@@ -14,11 +14,8 @@ Functions for generating random numbers.
 
 import os
 
-from adafruit_rsa import common, transform
-from adafruit_rsa._compat import byte
-
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
+from rsa import common, transform
+from rsa._compat import byte
 
 
 def read_random_bits(nbits: int) -> bytes:

@@ -1,25 +1,8 @@
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2011 Sybren A. Stüvel <sybren@stuvel.eu>
-#
-# SPDX-License-Identifier: Apache-2.0
-
-"""
-`adafruit_rsa.asn1`
-====================================================
-
-ASN.1 definitions.
-
-Not all ASN.1-handling code use these definitions, but when it does, they should be here.
-"""
-
 # pylint: disable=no-name-in-module, too-few-public-methods
 try:
     from pyasn1.type import univ, namedtype, tag
 except ImportError as err:
     raise ImportError("Usage of asn1.py requires pyasn1 library") from err
-
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 
 class PubKeyHeader(univ.Sequence):

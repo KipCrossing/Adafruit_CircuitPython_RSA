@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-`adafruit_rsa.key`
+`rsa.key`
 ====================================================
 
 RSA key generation code.
@@ -26,13 +26,13 @@ of pyasn1.
 
 """
 
-import adafruit_logging as logging
+import logging as logging
 
-import adafruit_rsa.prime
-import adafruit_rsa.pem
-import adafruit_rsa.common
-import adafruit_rsa.randnum
-import adafruit_rsa.core
+import rsa.prime
+import rsa.pem
+import rsa.common
+import rsa.randnum
+import rsa.core
 
 try:
     from typing import Any, Tuple, Dict, Callable
@@ -44,8 +44,6 @@ try:
 except ImportError:
     pass
 
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 # pylint: disable=invalid-name, useless-object-inheritance, redefined-builtin, no-name-in-module, too-few-public-methods
 log = logging.getLogger(__name__)
@@ -163,7 +161,7 @@ class AbstractKey(object):
         See https://en.wikipedia.org/wiki/Blinding_%28cryptography%29
         """
 
-        return (message * adafruit_rsa.core.fast_pow(r, self.e, self.n)) % self.n
+        return (message * rsa.core.fast_pow(r, self.e, self.n)) % self.n
 
     def unblind(self, blinded: int, r: int) -> int:
         """Performs blinding on the message using random number 'r'.
@@ -178,7 +176,7 @@ class AbstractKey(object):
         See https://en.wikipedia.org/wiki/Blinding_%28cryptography%29
         """
 
-        return (adafruit_rsa.common.inverse(r, self.n) * blinded) % self.n
+        return (rsa.common.inverse(r, self.n) * blinded) % self.n
 
 
 # pylint: disable=abstract-method
@@ -259,8 +257,8 @@ class PublicKey(AbstractKey):
         """
         # pylint: disable=import-outside-toplevel
         try:
-            from adafruit_rsa.tools.pyasn1.codec.der import decoder
-            from adafruit_rsa.asn1 import AsnPubKey
+            from rsa.tools.pyasn1.codec.der import decoder
+            from rsa.asn1 import AsnPubKey
         except ImportError as err:
             raise ImportError("This functionality requires the pyasn1 library") from err
 
@@ -305,7 +303,7 @@ class PublicKey(AbstractKey):
         :return: a PublicKey object
         """
 
-        der = adafruit_rsa.pem.load_pem(keyfile, "RSA PUBLIC KEY")
+        der = rsa.pem.load_pem(keyfile, "RSA PUBLIC KEY")
         return cls._load_pkcs1_der(der)
 
     def _save_pkcs1_pem(self) -> bytes:
@@ -316,7 +314,7 @@ class PublicKey(AbstractKey):
         """
 
         der = self._save_pkcs1_der()
-        return adafruit_rsa.pem.save_pem(der, "RSA PUBLIC KEY")
+        return rsa.pem.save_pem(der, "RSA PUBLIC KEY")
 
     @classmethod
     def load_pkcs1_openssl_pem(cls, keyfile: bytes) -> "PublicKey":
@@ -334,7 +332,7 @@ class PublicKey(AbstractKey):
         :return: a PublicKey object
         """
 
-        der = adafruit_rsa.pem.load_pem(keyfile, "PUBLIC KEY")
+        der = rsa.pem.load_pem(keyfile, "PUBLIC KEY")
         return cls.load_pkcs1_openssl_der(der)
 
     @classmethod
@@ -347,7 +345,7 @@ class PublicKey(AbstractKey):
         """
         # pylint: disable=import-outside-toplevel
         try:
-            from adafruit_rsa.asn1 import OpenSSLPubKey
+            from rsa.asn1 import OpenSSLPubKey
             from pyasn1.codec.der import decoder
             from pyasn1.type import univ
         except ImportError as err:
@@ -397,7 +395,7 @@ class PrivateKey(AbstractKey):
         # Calculate exponents and coefficient.
         self.exp1 = int(d % (p - 1))
         self.exp2 = int(d % (q - 1))
-        self.coef = adafruit_rsa.common.inverse(q, p)
+        self.coef = rsa.common.inverse(q, p)
 
     def __getitem__(self, key: str) -> Any:
         return getattr(self, key)
@@ -456,9 +454,9 @@ class PrivateKey(AbstractKey):
         :rtype: int
         """
 
-        blind_r = adafruit_rsa.randnum.randint(self.n - 1)
+        blind_r = rsa.randnum.randint(self.n - 1)
         blinded = self.blind(encrypted, blind_r)  # blind before decrypting
-        decrypted = adafruit_rsa.core.decrypt_int(blinded, self.d, self.n)
+        decrypted = rsa.core.decrypt_int(blinded, self.d, self.n)
 
         return self.unblind(decrypted, blind_r)
 
@@ -470,9 +468,9 @@ class PrivateKey(AbstractKey):
         :rtype: int
         """
 
-        blind_r = adafruit_rsa.randnum.randint(self.n - 1)
+        blind_r = rsa.randnum.randint(self.n - 1)
         blinded = self.blind(message, blind_r)  # blind before encrypting
-        encrypted = adafruit_rsa.core.encrypt_int(blinded, self.d, self.n)
+        encrypted = rsa.core.encrypt_int(blinded, self.d, self.n)
         return self.unblind(encrypted, blind_r)
 
     @classmethod
@@ -497,7 +495,7 @@ class PrivateKey(AbstractKey):
         """
 
         try:
-            from adafruit_rsa.tools.pyasn1.codec.der import (  # pylint: disable=import-outside-toplevel
+            from rsa.tools.pyasn1.codec.der import (  # pylint: disable=import-outside-toplevel
                 decoder,
             )
         except ImportError as err:
@@ -590,7 +588,7 @@ class PrivateKey(AbstractKey):
         :return: a PrivateKey object
         """
 
-        der = adafruit_rsa.pem.load_pem(keyfile, b"RSA PRIVATE KEY")
+        der = rsa.pem.load_pem(keyfile, b"RSA PRIVATE KEY")
         return cls._load_pkcs1_der(der)
 
     def _save_pkcs1_pem(self) -> bytes:
@@ -601,12 +599,12 @@ class PrivateKey(AbstractKey):
         """
 
         der = self._save_pkcs1_der()
-        return adafruit_rsa.pem.save_pem(der, b"RSA PRIVATE KEY")
+        return rsa.pem.save_pem(der, b"RSA PRIVATE KEY")
 
 
 def find_p_q(
     nbits: int,
-    getprime_func: Callable[[int], int] = adafruit_rsa.prime.getprime,
+    getprime_func: Callable[[int], int] = rsa.prime.getprime,
     accurate: bool = True,
 ) -> Tuple[int, int]:
     """Returns a tuple of two different primes of nbits bits each.
@@ -616,7 +614,7 @@ def find_p_q(
 
     :param nbits: the number of bits in each of p and q.
     :param getprime_func: the getprime function, defaults to
-        :py:func:`adafruit_rsa.prime.getprime`.
+        :py:func:`rsa.prime.getprime`.
 
         *Introduced in Python-RSA 3.1*
 
@@ -624,14 +622,14 @@ def find_p_q(
     :return: (p, q), where p > q
 
     >>> (p, q) = find_p_q(128)
-    >>> from adafruit_rsa.rsa import common
+    >>> from rsa.rsa import common
     >>> common.bit_size(p * q)
     256
 
     When not in accurate mode, the number of bits can be slightly less
 
     >>> (p, q) = find_p_q(128, accurate=False)
-    >>> from adafruit_rsa.rsa import common
+    >>> from rsa.rsa import common
     >>> common.bit_size(p * q) <= 256
     True
     >>> common.bit_size(p * q) > 240
@@ -667,7 +665,7 @@ def find_p_q(
             return True
 
         # Make sure we have just the right amount of bits
-        found_size = adafruit_rsa.common.bit_size(p * q)
+        found_size = rsa.common.bit_size(p * q)
         return total_bits == found_size
 
     # Keep choosing other primes until they match our requirements.
@@ -700,9 +698,9 @@ def calculate_keys_custom_exponent(p: int, q: int, exponent: int) -> Tuple[int, 
     phi_n = (p - 1) * (q - 1)
 
     try:
-        d = adafruit_rsa.common.inverse(exponent, phi_n)
-    except adafruit_rsa.common.NotRelativePrimeError as ex:
-        raise adafruit_rsa.common.NotRelativePrimeError(
+        d = rsa.common.inverse(exponent, phi_n)
+    except rsa.common.NotRelativePrimeError as ex:
+        raise rsa.common.NotRelativePrimeError(
             exponent,
             phi_n,
             ex.d,
@@ -744,7 +742,7 @@ def gen_keys(
 
     :param int nbits: the total number of bits in ``p`` and ``q``. Both ``p`` and
         ``q`` will use ``nbits/2`` bits.
-    :param Callable getprime_func: either :py:func:`adafruit_rsa.rsa.prime.getprime` or a function
+    :param Callable getprime_func: either :py:func:`rsa.rsa.prime.getprime` or a function
         with similar signature.
     :param bool accurate: when True, ``n`` will have exactly the number of bits you
         asked for. However, this makes key generation much slower. When False,
@@ -777,8 +775,8 @@ def newkeys(
     """Generates public and private keys, and returns them as (pub, priv).
 
     The public key is also known as the 'encryption key', and is a
-    :py:class:`adafruit_rsa.rsa.PublicKey` object. The private key is also known as the
-    'decryption key' and is a :py:class:`adafruit_rsa.rsa.PrivateKey` object.
+    :py:class:`rsa.rsa.PublicKey` object. The private key is also known as the
+    'decryption key' and is a :py:class:`rsa.rsa.PrivateKey` object.
 
     :param int nbits: the number of bits required to store ``n = p*q``.
     :param bool accurate: when True, ``n`` will have exactly the number of bits you
@@ -792,7 +790,7 @@ def newkeys(
     :param str log_level: Logger level, setting to DEBUG will log info about when
                         p and q are generating.
 
-    :return: a tuple (:py:class:`adafruit_rsa.PublicKey`, :py:class:`adafruit_rsa.PrivateKey`)
+    :return: a tuple (:py:class:`rsa.PublicKey`, :py:class:`rsa.PrivateKey`)
 
     The ``poolsize`` parameter was added in *Python-RSA 3.1* and requires
     Python 2.6 or newer.
@@ -808,7 +806,7 @@ def newkeys(
     if log_level == "DEBUG":
         log.setLevel(logging.DEBUG)
 
-    getprime_func = adafruit_rsa.prime.getprime
+    getprime_func = rsa.prime.getprime
 
     # Generate the key components
     (p, q, e, d) = gen_keys(nbits, getprime_func, accurate=accurate, exponent=exponent)

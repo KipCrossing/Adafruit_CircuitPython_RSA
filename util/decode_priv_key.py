@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2019 Google Inc.
-# SPDX-FileCopyrightText: 2019 Brent Rubell for Adafruit Industries
+# SPDX-FileCopyrightText: 2019 Brent Rubell for Adafrut Industries
 #
 # SPDX-License-Identifier: Apache-2.0
 

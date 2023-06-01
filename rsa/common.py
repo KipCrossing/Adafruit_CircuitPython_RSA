@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-`adafruit_rsa.common`
+`rsa.common`
 ====================================================
 
 Common functionality shared by several modules.
@@ -16,9 +16,6 @@ try:
     from typing import Optional, Tuple, Sequence
 except ImportError:
     pass
-
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 
 def bit_length(int_type: int) -> int:

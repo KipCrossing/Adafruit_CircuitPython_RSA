@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-# SPDX-FileCopyrightText: 2011 Sybren A. Stüvel <sybren@stuvel.eu>
-#
-# SPDX-License-Identifier: Apache-2.0
-
-"""
-`adafruit_rsa._compat`
-====================================================
-
-Python compatibility wrappers.
-"""
-
 import sys
 from struct import pack
 
@@ -23,9 +11,6 @@ try:
 except ImportError:
     pass
 
-
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 MAX_INT = sys.maxsize
 MAX_INT64 = (1 << 63) - 1

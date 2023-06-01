@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-`adafruit_rsa.core`
+`rsa.core`
 ====================================================
 
 Core mathematical operations.
@@ -14,15 +14,12 @@ mathematically on integers.
 """
 
 # pylint: disable=invalid-name
-from adafruit_rsa._compat import is_integer
+from rsa._compat import is_integer
 
 try:
     from typing import Any
 except ImportError:
     pass
-
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 
 def fast_pow(x: int, e: int, m: int) -> int:

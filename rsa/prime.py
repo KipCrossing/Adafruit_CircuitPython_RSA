@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-`adafruit_rsa.prime`
+`rsa.prime`
 ====================================================
 
 Numerical functions related to primes.
@@ -13,8 +13,8 @@ Implementation based on the book Algorithm Design by Michael T. Goodrich and
 Roberto Tamassia, 2002.
 """
 # pylint: disable=invalid-name
-import adafruit_rsa.common
-import adafruit_rsa.randnum
+import rsa.common
+import rsa.randnum
 
 try:
     try:
@@ -24,8 +24,6 @@ try:
 except ImportError:
     pass
 
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 __all__ = ["getprime", "are_relatively_prime"]
 
@@ -56,7 +54,7 @@ def get_primality_testing_rounds(number: int) -> Literal[3, 4, 7, 10]:
     """
 
     # Calculate number bitsize.
-    bitsize = adafruit_rsa.common.bit_size(number)
+    bitsize = rsa.common.bit_size(number)
     # Set number of rounds.
     if bitsize >= 1536:
         return 3
@@ -98,15 +96,15 @@ def miller_rabin_primality_testing(n: int, k: int) -> bool:
     # Test k witnesses.
     for _ in range(k):
         # Generate random integer a, where 2 <= a <= (n - 2)
-        a = adafruit_rsa.randnum.randint(n - 3) + 1
+        a = rsa.randnum.randint(n - 3) + 1
 
-        x = adafruit_rsa.core.fast_pow(a, d, n)
+        x = rsa.core.fast_pow(a, d, n)
 
         if x in (1, n - 1):
             continue
 
         for _ in range(r - 1):
-            x = adafruit_rsa.core.fast_pow(x, 2, n)
+            x = rsa.core.fast_pow(x, 2, n)
             if x == 1:
                 # n is composite.
                 return False
@@ -167,7 +165,7 @@ def getprime(nbits: int) -> int:
     >>> is_prime(p+1)
     False
 
-    >>> from adafruit_rsa.rsa import common
+    >>> from rsa.rsa import common
     >>> common.bit_size(p) == 128
     True
     """
@@ -175,7 +173,7 @@ def getprime(nbits: int) -> int:
     assert nbits > 3  # the loop wil hang on too small numbers
 
     while True:
-        integer = adafruit_rsa.randnum.read_random_odd_int(nbits)
+        integer = rsa.randnum.read_random_odd_int(nbits)
 
         # Test for primeness
         if is_prime(integer):

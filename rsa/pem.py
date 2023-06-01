@@ -4,24 +4,21 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-`adafruit_rsa.pem`
+`rsa.pem`
 ====================================================
 
 Functions that load and write PEM-encoded files.
 """
 
-from adafruit_binascii import a2b_base64, b2a_base64
+from binascii import a2b_base64, b2a_base64
 
 # pylint: disable=redefined-builtin
-from adafruit_rsa._compat import is_bytes
+from rsa._compat import is_bytes
 
 try:
     from typing import Union, Tuple
 except ImportError:
     pass
-
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
 
 
 def _markers(pem_marker: Union[bytes, str]) -> Tuple[bytes, bytes]:

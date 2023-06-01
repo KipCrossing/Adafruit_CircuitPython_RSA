@@ -15,8 +15,8 @@ prevent repetitions, or other common security improvements. Use with care.
 
 """
 
-from adafruit_rsa.key import newkeys, PrivateKey, PublicKey
-from adafruit_rsa.pkcs1 import (
+from rsa.key import newkeys, PrivateKey, PublicKey
+from rsa.pkcs1 import (
     encrypt,
     decrypt,
     sign,
@@ -27,9 +27,3 @@ from adafruit_rsa.pkcs1 import (
     sign_hash,
     compute_hash,
 )
-
-__author__ = "Sybren Stuvel, Barry Mead and Yesudeep Mangalapilly"
-__date__ = "2018-09-16"
-# __version__ = '4.0.0'
-__version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_RSA.git"
