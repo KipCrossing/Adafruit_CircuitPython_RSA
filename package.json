@@ -5,9 +5,6 @@
       "github:KipCrossing/micropython_rsa/rsa/__init__.py"
     ]
   ],
-  "deps": [
-    "hashlib",
-    "binascii"
-  ],
+  "deps": [],
   "version": "0.0.1"
 }
