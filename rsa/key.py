@@ -524,7 +524,7 @@ class PrivateKey(AbstractKey):
         exp1, exp2, coef = map(int, priv[6:9])
 
         if (key.exp1, key.exp2, key.coef) != (exp1, exp2, coef):
-
+            pass
 
         return key
 
@@ -794,8 +794,6 @@ def newkeys(
 
     if poolsize < 1:
         raise ValueError("Pool size (%i) should be >= 1" % poolsize)
-
-
 
     getprime_func = rsa.prime.getprime
 
