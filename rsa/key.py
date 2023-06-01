@@ -26,7 +26,6 @@ of pyasn1.
 
 """
 
-import logging as logging
 
 import rsa.prime
 import rsa.pem
@@ -46,9 +45,7 @@ except ImportError:
 
 
 # pylint: disable=invalid-name, useless-object-inheritance, redefined-builtin, no-name-in-module, too-few-public-methods
-log = logging.getLogger(__name__)
-log.addHandler(logging.StreamHandler())
-log.setLevel(logging.INFO)
+
 
 DEFAULT_EXPONENT = 65537
 
@@ -527,10 +524,7 @@ class PrivateKey(AbstractKey):
         exp1, exp2, coef = map(int, priv[6:9])
 
         if (key.exp1, key.exp2, key.coef) != (exp1, exp2, coef):
-            log.debug(
-                "You have providied a malformed keyfile. Either the exponents"
-                "or the coefficient are incorrect."
-            )
+
 
         return key
 
@@ -646,9 +640,7 @@ def find_p_q(
     qbits = nbits - shift
 
     # Choose the two initial primes
-    log.debug("find_p_q(%i): Finding p", nbits)
     p = getprime_func(pbits)
-    log.debug("find_p_q(%i): Finding q", nbits)
     q = getprime_func(qbits)
 
     def is_acceptable(p: int, q: int) -> bool:
@@ -803,8 +795,7 @@ def newkeys(
     if poolsize < 1:
         raise ValueError("Pool size (%i) should be >= 1" % poolsize)
 
-    if log_level == "DEBUG":
-        log.setLevel(logging.DEBUG)
+
 
     getprime_func = rsa.prime.getprime
 
